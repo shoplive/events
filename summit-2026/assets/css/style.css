@@ -147,7 +147,10 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 /* 어두운 바탕 위로 올라온 요소 가독성 보정 */
 .sec--grad .spk-topic { color: var(--on-dark-1); }
 .sec--grad .emph h2 { color: var(--on-dark-1); }
-.sec--grad .emph h2 em { color: var(--brand-warm); }
+.sec--grad .emph h2 em {
+  color: #2A2A2A;
+  text-shadow: 0 1px 3px rgba(200,200,200,0.22);
+}
 .sec--grad .map-btn { border-color: var(--on-dark-1); color: var(--on-dark-1); }
 .sec--grad .map-btn:hover { background: var(--on-dark-1); color: var(--ink); }
 
