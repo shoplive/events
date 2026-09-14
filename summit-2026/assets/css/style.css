@@ -716,8 +716,19 @@ html[lang="ja"] .perk-req-tx { word-break: auto-phrase; }
 
 .venue-kakao-map {
   margin-top: 20px; border-radius: 18px; border: 1px solid var(--line-paper);
-  overflow-x: auto; max-width: 100%;
+  overflow: hidden; max-width: 100%;
 }
+/* 카카오맵이 주입하는 마크업 보정 —
+   지도는 mapWidth 로 준 값 그대로 고정 폭으로 그려진다. 아래 실행 스크립트가 칸
+   너비를 재서 넘기므로 보통은 딱 맞지만, 창을 줄여 칸이 좁아진 뒤에는 이미 그려진
+   지도가 따라 줄지 않는다. 그때 가로 스크롤바가 생기지 않도록 폭을 묶어 둔다. */
+.venue-kakao-map .root_daum_roughmap { width: 100% !important; max-width: 100%; }
+.venue-kakao-map .wrap_map { max-width: 100%; }
+/* 주소·전화는 카카오 스타일시트가 흰 배경 기준의 짙은 회색을 쓴다. 이 섹션은
+   바탕이 검정이라 그대로 두면 글씨가 묻힌다. 흰 바(.wrap_controllers)는 배경이
+   흰색이므로 건드리지 않는다. */
+.venue-kakao-map .cont .tit { color: var(--on-dark-1) !important; }
+.venue-kakao-map .cont .txt { color: var(--on-dark-2) !important; }
 
 .venue-routes h3 {
   font-family: var(--display); font-weight: 700; font-size: 1.0625rem;

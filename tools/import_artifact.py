@@ -39,7 +39,7 @@ ASSET_NAMES = {
     # brand marks
     "8b3febfe": "img/summit-lockup.png",
     "6b325d34": "img/shoplive-logo.png",
-    "39978ec8": "img/hero-mark.webp",
+    "26e38070": "img/hero-mark.webp",
     "c527a51b": "img/hero-symbol.webp",
     # speaker company logos
     "f606c36b": "img/logo-musinsa.png",

@@ -62,7 +62,7 @@
 
     <div class="wrap hero-inner">
       <div class="hero-lockup">
-        <img class="hl-mark" src="assets/img/hero-mark.webp" alt="Video Commerce Summit 2026" />
+        <img class="hl-mark" src="assets/img/hero-mark.webp" alt="Video Commerce Summit 2026">
       </div>
       <p class="hero-meta">
         <span>2026. 10. 2 (금)</span><i>·</i>
@@ -500,12 +500,22 @@
 
             <!-- 3. 실행 스크립트 -->
             <script charset="UTF-8">
-                new daum.roughmap.Lander({
-                    "timestamp" : "1789112774478",
-                    "key" : "uinky87t5ti",
-                    "mapWidth" : "640",
-                    "mapHeight" : "360"
-                }).render();
+                (function () {
+                    /* 지도는 mapWidth 로 준 값 그대로 고정 폭으로 그려진다. 640 을
+                       박아두면 좌측 칼럼(약 568px)보다 넓어 가로로 넘치므로, 실제
+                       칸 너비를 재서 넘긴다. 로더를 받지 못한 환경에서는 daum 이
+                       없으므로 조용히 넘어간다. */
+                    if (!window.daum || !daum.roughmap) return;
+                    var node = document.getElementById('daumRoughmapContainer1789112774478');
+                    var box = node && node.parentNode;
+                    var w = box ? box.clientWidth : 0;
+                    new daum.roughmap.Lander({
+                        "timestamp" : "1789112774478",
+                        "key" : "uinky87t5ti",
+                        "mapWidth" : String(w > 0 ? w : 640),
+                        "mapHeight" : "360"
+                    }).render();
+                })();
             </script>
           </div>
 
