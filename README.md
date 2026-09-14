@@ -72,26 +72,28 @@ python3 tools/import_artifact.py <내려받은-artifact.html> --out summit-2026
 `main` 에 푸시되면 `.github/workflows/deploy-pages.yml` 이 링크 검사를 돌리고
 GitHub Pages 로 올립니다.
 
-최초 1회 설정이 필요합니다.
+Pages 활성화는 워크플로가 `configure-pages` 의 `enablement: true` 로 직접 처리하므로,
+Settings → Pages 에서 손으로 Source 를 지정할 필요는 없습니다.
+남은 것은 DNS 와 HTTPS 두 가지입니다.
 
-0. **기본 브랜치** — 저장소가 비어 있는 상태에서 시작했기 때문에 현재 기본 브랜치가
-   `claude/focused-babbage-4iczig` 로 잡혀 있습니다. 워크플로는 `main` 에 대한 푸시에서
-   도는 만큼, 이 브랜치를 `main` 으로 만들거나(Settings → Branches → 이름 변경) 별도로
-   `main` 을 만들어 병합해 주세요.
-1. **저장소 공개 범위** — 현재 저장소는 **private** 입니다. GitHub Pages 는 무료·Team
-   플랜에서 public 저장소만 게시할 수 있습니다. Enterprise Cloud 가 아니라면 저장소를
-   public 으로 바꾸거나, 아래 "GitHub Pages 가 아닌 곳에 올릴 경우" 를 따르세요.
-2. **저장소 설정** — Settings → Pages → Build and deployment → Source 를
-   **GitHub Actions** 로 지정합니다.
-3. **DNS** — `shoplivecorp.com` 존에 CNAME 레코드를 추가합니다.
+1. **DNS** — `shoplivecorp.com` 존에 CNAME 레코드를 추가합니다.
 
    ```
    events.shoplivecorp.com.  CNAME  shoplive.github.io.
    ```
 
-4. **HTTPS** — DNS 가 전파되면 Settings → Pages 에서 커스텀 도메인이 확인됩니다.
+   커스텀 도메인 자체는 저장소 루트의 `CNAME` 파일로 지정되며, 배포 아티팩트에 함께
+   올라갑니다. 따라서 Settings 에서 도메인을 다시 입력할 필요는 없고, 도메인을 바꿀 때는
+   `CNAME` 파일을 고치면 됩니다.
+
+2. **HTTPS** — DNS 가 전파되면 Settings → Pages 에서 커스텀 도메인이 확인됩니다.
    확인이 끝나면 **Enforce HTTPS** 를 켜 주세요. 이 사이트는 https 로만 서비스하며,
    이 설정이 켜져 있어야 `http://` 로 들어온 요청이 `https://` 로 넘어갑니다.
+   인증서 발급에는 도메인 확인 후 몇 분에서 길게는 한 시간 정도 걸릴 수 있습니다.
+
+> GitHub Pages 는 무료·Team 플랜에서 public 저장소만 게시할 수 있습니다.
+> 저장소를 private 으로 되돌려야 한다면 Enterprise Cloud 가 아닌 이상 Pages 를 쓸 수 없으니,
+> 아래 "GitHub Pages 가 아닌 곳에 올릴 경우" 를 따라 주세요.
 
 ### HTTPS 전용
 

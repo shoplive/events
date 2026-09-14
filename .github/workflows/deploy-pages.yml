@@ -28,7 +28,12 @@ jobs:
       - name: Check that every local asset reference resolves
         run: python3 tools/check_links.py
 
+      # enablement lets the first run turn Pages on itself; without it the
+      # action fails with "Get Pages site failed" until someone flips the
+      # source to GitHub Actions by hand in Settings.
       - uses: actions/configure-pages@v5
+        with:
+          enablement: true
 
       # The repository root is the site root: / is the event index and
       # /summit-2026/ is the summit page.
