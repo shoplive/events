@@ -60,9 +60,8 @@ ASSET_NAMES = {
     "ab724149": "img/perk-networking-lunch.webp",
     "cbf72f16": "img/perk-goods.webp",
     "2d427780": "img/perk-luckydraw-leica.webp",
-    # venue
-    "b516d9d8": "img/venue-lotte-world-tower.webp",
-    "3ecb8ec5": "img/venue-sky31.webp",
+    # moment 섹션 배경
+    "41988da2": "img/moment-bg.webp",
 }
 
 EXT = {
