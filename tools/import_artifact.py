@@ -37,9 +37,8 @@ ASSET_NAMES = {
     "1b487b57": "fonts/pretendard-700.woff2",
     "e5e92cb2": "fonts/pretendard-800.woff2",
     # brand marks
-    "8b3febfe": "img/summit-lockup.png",
     "6b325d34": "img/shoplive-logo.png",
-    "a17165dc": "img/hero-mark.svg",
+    "a17165dc": "img/summit-lockup.svg",
     "c527a51b": "img/hero-symbol.webp",
     # speaker company logos
     "f606c36b": "img/logo-musinsa.png",
@@ -99,11 +98,11 @@ HEAD_TEMPLATE = """<!doctype html>
 <meta property="og:title" content="{title}" />
 <meta property="og:description" content="{description}" />
 <meta property="og:url" content="{site_url}" />
-<meta property="og:image" content="{site_url}assets/img/summit-lockup.png" />
+<meta property="og:image" content="{site_url}og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="{title}" />
 <meta name="twitter:description" content="{description}" />
-<meta name="twitter:image" content="{site_url}assets/img/summit-lockup.png" />
+<meta name="twitter:image" content="{site_url}og-image.png" />
 
 <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
 <link rel="apple-touch-icon" href="assets/img/shoplive-logo.png" />
