@@ -89,22 +89,22 @@ GitHub Pages 로 올립니다.
    events.shoplivecorp.com.  CNAME  shoplive.github.io.
    ```
 
-4. **HTTPS** — DNS 가 전파되면 Settings → Pages 에서 커스텀 도메인이 확인되고,
-   **Enforce HTTPS** 를 켤 수 있습니다.
+4. **HTTPS** — DNS 가 전파되면 Settings → Pages 에서 커스텀 도메인이 확인됩니다.
+   확인이 끝나면 **Enforce HTTPS** 를 켜 주세요. 이 사이트는 https 로만 서비스하며,
+   이 설정이 켜져 있어야 `http://` 로 들어온 요청이 `https://` 로 넘어갑니다.
 
-### http / https 에 대해
+### HTTPS 전용
 
-페이지의 `canonical`·OG 태그는 `https://events.shoplivecorp.com/summit-2026/` 를 가리킵니다.
-GitHub Pages 는 커스텀 도메인에도 무료 인증서를 발급하고 `http://` 요청을 `https://` 로
-넘겨주므로, 안내받은 `http://events.shoplivecorp.com/summit-2026` 주소도 그대로 동작합니다.
-https 를 쓰지 않기로 했다면 `summit-2026/index.html` 의 해당 URL 들과
-`sitemap.xml`, `robots.txt` 를 `http://` 로 바꾸면 됩니다.
+이 사이트는 `https://events.shoplivecorp.com` 으로만 서비스합니다.
+`canonical`·OG·`sitemap.xml`·`robots.txt` 의 URL 이 모두 `https://` 로 맞춰져 있으니,
+새 페이지를 추가할 때도 절대 URL 은 `https://` 로 적어 주세요.
 
 ### GitHub Pages 가 아닌 곳에 올릴 경우
 
 저장소 내용은 특정 호스팅에 묶여 있지 않은 순수 정적 파일입니다.
 S3·CloudFront 나 사내 웹서버에 올린다면 저장소 루트를 문서 루트로 그대로 복사하고,
 `CNAME`·`.nojekyll`·`.github/` 만 빼면 됩니다.
+이 경우 인증서 발급과 `http://` → `https://` 리다이렉트는 그쪽에서 직접 설정해야 합니다.
 
 ## 외부 의존성
 
