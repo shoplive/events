@@ -16,10 +16,17 @@ from urllib.parse import unquote, urlparse
 
 SKIP_PREFIXES = ("http://", "https://", "//", "#", "data:", "mailto:", "tel:", "javascript:")
 
+# Absolute URLs on the site's own host — canonical, og:image and the like — point
+# at files in this repository, so they are checked like any other local
+# reference. A broken one is invisible to visitors but breaks link previews.
+SITE_HOSTS = ("events.shoplivecorp.com", "shoplive.github.io")
+
 HTML_REF = re.compile(r'(?:src|href)\s*=\s*["\']([^"\']+)["\']')
 CSS_REF = re.compile(r"url\(\s*['\"]?([^'\")]+)['\"]?\s*\)")
 # Asset paths assigned in page scripts, e.g. `img.src = 'assets/img/mark.webp'`.
 JS_REF = re.compile(r"""\.src\s*=\s*['"]([^'"]+)['"]""")
+# og:image and friends carry their URL in content=, not src/href.
+META_REF = re.compile(r'''<meta[^>]+content\s*=\s*["']([^"']+)["']''', re.I)
 
 # 404.html is the one page that cannot be written relatively: Pages renders it
 # at whatever URL was requested, so a relative reference resolves against that
@@ -37,6 +44,19 @@ def is_base_path_bound(ref: str) -> bool:
     never reach here; local_refs drops them with the other external prefixes.
     """
     return ref.startswith("/")
+
+
+def as_site_path(ref: str) -> str | None:
+    """Return the site-absolute path of `ref` if it points at this site's host."""
+    parts = urlparse(ref)
+    if parts.scheme in ("http", "https") and parts.netloc in SITE_HOSTS:
+        # shoplive.github.io serves the site under /events/; strip that prefix so
+        # the path resolves against the repository root either way.
+        path = parts.path
+        if parts.netloc == "shoplive.github.io" and path.startswith("/events/"):
+            path = path[len("/events"):]
+        return path or "/"
+    return None
 
 
 def local_refs(text: str, patterns) -> list[str]:
@@ -93,6 +113,17 @@ def main() -> int:
 
         for base, ref in targets:
             inspect(page, base, ref)
+
+        # Absolute URLs on our own host (canonical, og:image, twitter:image)
+        # name files in this repository. They are meant to be absolute, so they
+        # are checked for existence only, not for base-path binding.
+        for value in HTML_REF.findall(html) + META_REF.findall(html):
+            site = as_site_path(value)
+            if site is None:
+                continue
+            checked += 1
+            if not resolve(root, root, site.lstrip("/")).is_file():
+                broken.append(f"{page.relative_to(root)} -> {value}")
 
     for stylesheet in sorted(root.rglob("*.css")):
         if ".git" in stylesheet.parts:
