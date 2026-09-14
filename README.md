@@ -22,6 +22,7 @@
 ├── robots.txt / sitemap.xml
 ├── summit-2026/
 │   ├── index.html
+│   ├── og-image.png          링크 미리보기 이미지 — 저장소 소유, 임포터가 건드리지 않음
 │   └── assets/
 │       ├── css/fonts.css     Pretendard @font-face
 │       ├── css/style.css     페이지 스타일
@@ -50,6 +51,23 @@ python3 -m http.server 8000
 ```bash
 python3 tools/check_links.py
 ```
+
+### 링크 미리보기 이미지
+
+`og:image` 와 `twitter:image` 는 `summit-2026/og-image.png` 를 가리킵니다. 이 파일은
+**일부러 `assets/` 바깥에** 둡니다. 아티팩트가 어떤 자산을 담을지는 아티팩트가 정하는데,
+`og:image` 가 그중 하나를 가리키고 있으면 아티팩트가 그 이미지를 바꾸거나 뺄 때마다
+미리보기가 깨집니다. 실제로 두 번 깨졌습니다. `assets/` 바깥에 두면 재임포트가 닿지
+않습니다.
+
+교체할 때 지킬 것:
+
+- **1200×630** (비율 1.91:1). `twitter:card` 가 `summary_large_image` 라 1.91:1 로
+  잘립니다. 이전 이미지는 599×200(3:1)이라 가로 36% 가 잘려 워드마크 양끝이 날아갔습니다.
+- **PNG 또는 JPEG.** SVG·WebP 는 링크 미리보기에서 렌더하지 않는 서비스가 많습니다.
+
+`tools/check_links.py` 가 이 파일의 존재를 검사하므로, 지우거나 이름을 바꾸면 배포가
+막힙니다.
 
 ## 페이지 수정하기
 
