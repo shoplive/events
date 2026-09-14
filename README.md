@@ -74,15 +74,22 @@ GitHub Pages 로 올립니다.
 
 최초 1회 설정이 필요합니다.
 
-1. **저장소 설정** — Settings → Pages → Build and deployment → Source 를
+0. **기본 브랜치** — 저장소가 비어 있는 상태에서 시작했기 때문에 현재 기본 브랜치가
+   `claude/focused-babbage-4iczig` 로 잡혀 있습니다. 워크플로는 `main` 에 대한 푸시에서
+   도는 만큼, 이 브랜치를 `main` 으로 만들거나(Settings → Branches → 이름 변경) 별도로
+   `main` 을 만들어 병합해 주세요.
+1. **저장소 공개 범위** — 현재 저장소는 **private** 입니다. GitHub Pages 는 무료·Team
+   플랜에서 public 저장소만 게시할 수 있습니다. Enterprise Cloud 가 아니라면 저장소를
+   public 으로 바꾸거나, 아래 "GitHub Pages 가 아닌 곳에 올릴 경우" 를 따르세요.
+2. **저장소 설정** — Settings → Pages → Build and deployment → Source 를
    **GitHub Actions** 로 지정합니다.
-2. **DNS** — `shoplivecorp.com` 존에 CNAME 레코드를 추가합니다.
+3. **DNS** — `shoplivecorp.com` 존에 CNAME 레코드를 추가합니다.
 
    ```
    events.shoplivecorp.com.  CNAME  shoplive.github.io.
    ```
 
-3. **HTTPS** — DNS 가 전파되면 Settings → Pages 에서 커스텀 도메인이 확인되고,
+4. **HTTPS** — DNS 가 전파되면 Settings → Pages 에서 커스텀 도메인이 확인되고,
    **Enforce HTTPS** 를 켤 수 있습니다.
 
 ### http / https 에 대해
