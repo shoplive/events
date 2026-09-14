@@ -1,0 +1,8 @@
+/* PP Mori ExtraBold — 웹 라이선스 woff2를 받으면 아래 주석을 풀고 base64를 넣으면 됩니다.
+@font-face{font-family:"PP Mori";font-style:normal;font-weight:800;font-display:swap;
+  src:url(data:font/woff2;base64,__PPMORI_EXTRABOLD__) format("woff2");}
+*/
+@font-face{font-family:"Pretendard";font-style:normal;font-weight:400;font-display:swap;src:url(../fonts/pretendard-400.woff2) format("woff2");}
+@font-face{font-family:"Pretendard";font-style:normal;font-weight:500;font-display:swap;src:url(../fonts/pretendard-500.woff2) format("woff2");}
+@font-face{font-family:"Pretendard";font-style:normal;font-weight:700;font-display:swap;src:url(../fonts/pretendard-700.woff2) format("woff2");}
+@font-face{font-family:"Pretendard";font-style:normal;font-weight:800;font-display:swap;src:url(../fonts/pretendard-800.woff2) format("woff2");}
