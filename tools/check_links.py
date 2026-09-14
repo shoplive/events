@@ -21,17 +21,22 @@ CSS_REF = re.compile(r"url\(\s*['\"]?([^'\")]+)['\"]?\s*\)")
 # Asset paths assigned in page scripts, e.g. `img.src = 'assets/img/mark.webp'`.
 JS_REF = re.compile(r"""\.src\s*=\s*['"]([^'"]+)['"]""")
 
-# A reference beginning with a single slash is relative to the host, not to the
-# site, so it only works where the site sits at the root of its domain. That
-# holds for events.shoplivecorp.com but not for the github.io project page,
-# where the site is mounted under /events/.
-SITE_ABSOLUTE = re.compile(r'(?:src|href)\s*=\s*["\'](/[^/"\'][^"\']*)?["\']')
-
 # 404.html is the one page that cannot be written relatively: Pages renders it
 # at whatever URL was requested, so a relative reference resolves against that
 # path rather than the file. It works the root out at runtime and keeps the
 # site-absolute form only as the no-script fallback.
 BASE_PATH_EXEMPT = {"404.html"}
+
+
+def is_base_path_bound(ref: str) -> bool:
+    """True if `ref` is resolved from the host root rather than the document.
+
+    Such a reference only works where the site sits at the root of its domain.
+    That holds for events.shoplivecorp.com but not for the github.io project
+    page, where the site is mounted under /events/. Protocol-relative refs
+    never reach here; local_refs drops them with the other external prefixes.
+    """
+    return ref.startswith("/")
 
 
 def local_refs(text: str, patterns) -> list[str]:
@@ -57,7 +62,17 @@ def resolve(root: pathlib.Path, base: pathlib.Path, ref: str) -> pathlib.Path:
 def main() -> int:
     root = pathlib.Path(sys.argv[1] if len(sys.argv) > 1 else ".").resolve()
     broken: list[str] = []
+    absolute: list[str] = []
     checked = 0
+
+    def inspect(origin: pathlib.Path, base: pathlib.Path, ref: str) -> None:
+        nonlocal checked
+        checked += 1
+        name = origin.relative_to(root)
+        if not resolve(root, base, ref).is_file():
+            broken.append(f"{name} -> {ref}")
+        if is_base_path_bound(ref) and name.as_posix() not in BASE_PATH_EXEMPT:
+            absolute.append(f"{name} -> {ref}")
 
     for page in sorted(root.rglob("*.html")):
         if ".git" in page.parts:
@@ -77,26 +92,14 @@ def main() -> int:
                 targets += [(page.parent, ref) for ref in local_refs(js.read_text(encoding="utf-8"), [JS_REF])]
 
         for base, ref in targets:
-            checked += 1
-            if not resolve(root, base, ref).is_file():
-                broken.append(f"{page.relative_to(root)} -> {ref}")
+            inspect(page, base, ref)
 
     for stylesheet in sorted(root.rglob("*.css")):
         if ".git" in stylesheet.parts:
             continue
         css = re.sub(r"/\*.*?\*/", "", stylesheet.read_text(encoding="utf-8"), flags=re.S)
         for ref in local_refs(css, [CSS_REF]):
-            checked += 1
-            if not resolve(root, stylesheet.parent, ref).is_file():
-                broken.append(f"{stylesheet.relative_to(root)} -> {ref}")
-
-    absolute: list[str] = []
-    for page in sorted(root.rglob("*.html")):
-        if ".git" in page.parts or page.relative_to(root).as_posix() in BASE_PATH_EXEMPT:
-            continue
-        html = re.sub(r"<!--.*?-->", "", page.read_text(encoding="utf-8"), flags=re.S)
-        for ref in SITE_ABSOLUTE.findall(html):
-            absolute.append(f"{page.relative_to(root)} -> {ref}")
+            inspect(stylesheet, stylesheet.parent, ref)
 
     if broken:
         print(f"{len(broken)} broken reference(s) out of {checked}:", file=sys.stderr)
