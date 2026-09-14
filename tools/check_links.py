@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Fail if any local asset reference in the site does not resolve to a file.
+"""Fail if the site has a broken local reference or one tied to a base path.
 
-A broken image path on a static site is invisible until someone loads the page,
-so the deploy workflow runs this first. Only local references are checked;
-external URLs, anchors and data URIs are left alone.
+Both faults are invisible until someone loads the page, so the deploy workflow
+runs this first. Only local references are checked; external URLs, anchors and
+data URIs are left alone.
 
 Usage:
     python3 tools/check_links.py [root]
@@ -20,6 +20,18 @@ HTML_REF = re.compile(r'(?:src|href)\s*=\s*["\']([^"\']+)["\']')
 CSS_REF = re.compile(r"url\(\s*['\"]?([^'\")]+)['\"]?\s*\)")
 # Asset paths assigned in page scripts, e.g. `img.src = 'assets/img/mark.webp'`.
 JS_REF = re.compile(r"""\.src\s*=\s*['"]([^'"]+)['"]""")
+
+# A reference beginning with a single slash is relative to the host, not to the
+# site, so it only works where the site sits at the root of its domain. That
+# holds for events.shoplivecorp.com but not for the github.io project page,
+# where the site is mounted under /events/.
+SITE_ABSOLUTE = re.compile(r'(?:src|href)\s*=\s*["\'](/[^/"\'][^"\']*)?["\']')
+
+# 404.html is the one page that cannot be written relatively: Pages renders it
+# at whatever URL was requested, so a relative reference resolves against that
+# path rather than the file. It works the root out at runtime and keeps the
+# site-absolute form only as the no-script fallback.
+BASE_PATH_EXEMPT = {"404.html"}
 
 
 def local_refs(text: str, patterns) -> list[str]:
@@ -78,13 +90,30 @@ def main() -> int:
             if not resolve(root, stylesheet.parent, ref).is_file():
                 broken.append(f"{stylesheet.relative_to(root)} -> {ref}")
 
+    absolute: list[str] = []
+    for page in sorted(root.rglob("*.html")):
+        if ".git" in page.parts or page.relative_to(root).as_posix() in BASE_PATH_EXEMPT:
+            continue
+        html = re.sub(r"<!--.*?-->", "", page.read_text(encoding="utf-8"), flags=re.S)
+        for ref in SITE_ABSOLUTE.findall(html):
+            absolute.append(f"{page.relative_to(root)} -> {ref}")
+
     if broken:
         print(f"{len(broken)} broken reference(s) out of {checked}:", file=sys.stderr)
         for item in broken:
             print(f"  {item}", file=sys.stderr)
+    if absolute:
+        print(
+            f"{len(absolute)} reference(s) assume the site is served from the "
+            "root of its domain; make them relative to the document:",
+            file=sys.stderr,
+        )
+        for item in absolute:
+            print(f"  {item}", file=sys.stderr)
+    if broken or absolute:
         return 1
 
-    print(f"all {checked} local references resolve")
+    print(f"all {checked} local references resolve, none tied to a base path")
     return 0
 
 
