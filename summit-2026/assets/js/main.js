@@ -277,13 +277,30 @@
 })();
 
 /* ============================================================
-   3. 푸터에 닿으면 플로팅 CTA 숨김
+   3. 화면에 실제 CTA 가 있으면 플로팅 CTA 숨김
    ============================================================ */
 (function () {
   var cta = document.getElementById('floatCta');
-  var foot = document.getElementById('footer');
-  var attend = document.getElementById('attend');
-  if (!cta || !foot || !('IntersectionObserver' in window)) return;
+  if (!cta || !('IntersectionObserver' in window)) return;
+
+  /* 버튼 자체를 본다. 예전에는 버튼을 감싼 섹션(.hero · #attend)이 20% 이상
+     보이는지로 판단했는데, 히어로처럼 긴 섹션은 끝까지 스크롤하면 노출 비율이
+     20% 아래로 떨어지는 동안에도 그 안의 버튼은 화면에 남아 있어서 버튼이 둘 다
+     보였다. 섹션 면적은 "버튼이 화면에 있다" 의 대리 지표가 되지 못한다. */
+  var targets = [];
+  ['.hero-cta', '.invite-cta', '#footer'].forEach(function (sel) {
+    var el = document.querySelector(sel);
+    if (el) targets.push(el);
+  });
+  if (!targets.length) return;
+
+  /* 헤더는 sticky 라 뷰포트 상단을 덮는다. 그 아래 깔린 버튼은 화면 안에 있어도
+     누를 수 없으므로, 관찰 영역에서 헤더 높이만큼을 잘라낸다. 이게 없으면 인라인
+     CTA 가 헤더에 가려지는 구간에서 플로팅까지 숨어, 어디에서도 CTA 를 누를 수
+     없는 상태가 된다. */
+  var head = document.querySelector('.gnb');
+  var inset = head ? Math.round(head.getBoundingClientRect().height) : 0;
+
   var active = [];
   var io = new IntersectionObserver(function (entries) {
     entries.forEach(function (e) {
@@ -292,11 +309,8 @@
       else if (i >= 0) { active.splice(i, 1); }
     });
     cta.classList.toggle('is-hidden', active.length > 0);
-  }, { threshold: 0.2 });
-  var hero = document.querySelector('.hero');
-  io.observe(foot);
-  io.observe(attend);
-  if (hero) io.observe(hero);
+  }, { threshold: 0, rootMargin: -inset + 'px 0px 0px 0px' });
+  targets.forEach(function (el) { io.observe(el); });
 })();
 
 /* 언어 선택 드롭다운 */
