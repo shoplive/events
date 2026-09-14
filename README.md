@@ -18,7 +18,7 @@
 ├── .nojekyll                 Jekyll 전처리 없이 파일 그대로 서빙
 ├── index.html                행사 목록
 ├── 404.html
-├── favicon.svg               ⚠ 임시 플레이스홀더 — 실제 브랜드 파비콘으로 교체 필요
+├── favicon.svg               Shoplive 브랜드 파비콘 (developer.shoplive.cloud 와 동일)
 ├── robots.txt / sitemap.xml
 ├── summit-2026/
 │   ├── index.html
@@ -127,7 +127,6 @@ S3·CloudFront 나 사내 웹서버에 올린다면 저장소 루트를 문서 �
 
 ## 알려진 사항
 
-- `favicon.svg` 는 브랜드 레드만 쓴 임시 도형입니다. 실제 파비콘으로 교체해 주세요.
 - `summit-2026/assets/css/fonts.css` 에 PP Mori ExtraBold `@font-face` 가 주석으로
   남아 있습니다. 웹 라이선스 woff2 를 확보하면 주석을 풀어 적용할 수 있고,
   그 전까지 히어로 워드마크는 Pretendard 로 렌더링됩니다.
