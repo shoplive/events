@@ -39,7 +39,7 @@ ASSET_NAMES = {
     # brand marks
     "8b3febfe": "img/summit-lockup.png",
     "6b325d34": "img/shoplive-logo.png",
-    "26e38070": "img/hero-mark.webp",
+    "a17165dc": "img/hero-mark.svg",
     "c527a51b": "img/hero-symbol.webp",
     # speaker company logos
     "f606c36b": "img/logo-musinsa.png",
@@ -99,11 +99,11 @@ HEAD_TEMPLATE = """<!doctype html>
 <meta property="og:title" content="{title}" />
 <meta property="og:description" content="{description}" />
 <meta property="og:url" content="{site_url}" />
-<meta property="og:image" content="{site_url}assets/img/hero-mark.webp" />
+<meta property="og:image" content="{site_url}assets/img/summit-lockup.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="{title}" />
 <meta name="twitter:description" content="{description}" />
-<meta name="twitter:image" content="{site_url}assets/img/hero-mark.webp" />
+<meta name="twitter:image" content="{site_url}assets/img/summit-lockup.png" />
 
 <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
 <link rel="apple-touch-icon" href="assets/img/shoplive-logo.png" />
