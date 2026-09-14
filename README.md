@@ -14,7 +14,7 @@
 
 ```
 .
-├── CNAME                     커스텀 도메인 (GitHub Pages)
+├── CNAME                     의도한 도메인 기록용 (Actions 배포에서는 무시됨 — 아래 배포 참고)
 ├── .nojekyll                 Jekyll 전처리 없이 파일 그대로 서빙
 ├── index.html                행사 목록
 ├── 404.html
@@ -72,9 +72,8 @@ python3 tools/import_artifact.py <내려받은-artifact.html> --out summit-2026
 `main` 에 푸시되면 `.github/workflows/deploy-pages.yml` 이 링크 검사를 돌리고
 GitHub Pages 로 올립니다.
 
-Pages 활성화는 워크플로가 `configure-pages` 의 `enablement: true` 로 직접 처리하므로,
-Settings → Pages 에서 손으로 Source 를 지정할 필요는 없습니다.
-남은 것은 DNS 와 HTTPS 두 가지입니다.
+Pages 활성화(Source 를 GitHub Actions 로 지정하는 것)는 워크플로가 `configure-pages` 의
+`enablement: true` 로 직접 처리합니다. 나머지 세 가지는 수동 설정이 필요합니다.
 
 1. **DNS** — `shoplivecorp.com` 존에 CNAME 레코드를 추가합니다.
 
@@ -82,11 +81,22 @@ Settings → Pages 에서 손으로 Source 를 지정할 필요는 없습니다.
    events.shoplivecorp.com.  CNAME  shoplive.github.io.
    ```
 
-   커스텀 도메인 자체는 저장소 루트의 `CNAME` 파일로 지정되며, 배포 아티팩트에 함께
-   올라갑니다. 따라서 Settings 에서 도메인을 다시 입력할 필요는 없고, 도메인을 바꿀 때는
-   `CNAME` 파일을 고치면 됩니다.
+2. **커스텀 도메인 등록** — Settings → Pages → Custom domain 에
+   `events.shoplivecorp.com` 을 입력하고 Save 합니다.
 
-2. **HTTPS** — DNS 가 전파되면 Settings → Pages 에서 커스텀 도메인이 확인됩니다.
+   **DNS 만으로는 연결되지 않습니다.** GitHub 이 이 도메인을 이 저장소의 것으로 알아야
+   하는데, Actions 로 배포할 때는 저장소의 `CNAME` 파일이 그 역할을 하지 못합니다.
+   문서에 그대로 적혀 있습니다 — *"publishing from a custom GitHub Actions workflow 인
+   경우 `CNAME` 파일은 생성되지 않고, 기존 `CNAME` 파일은 무시되며 필요하지도 않다."*
+   `CNAME` 파일을 브랜치 배포에서처럼 읽어가는 것은 브랜치를 소스로 쓸 때뿐입니다.
+
+   저장소의 `CNAME` 파일은 의도한 도메인을 기록해 두는 용도로만 남겨 둔 것이며,
+   **이 파일을 고쳐도 도메인은 바뀌지 않습니다.** 도메인 변경은 Settings 에서 하세요.
+
+   등록이 끝나면 `shoplive.github.io/events/*` 로 들어온 요청은 커스텀 도메인으로
+   리다이렉트됩니다.
+
+3. **HTTPS** — DNS 가 전파되면 Settings → Pages 에서 커스텀 도메인이 확인됩니다.
    확인이 끝나면 **Enforce HTTPS** 를 켜 주세요. 이 사이트는 https 로만 서비스하며,
    이 설정이 켜져 있어야 `http://` 로 들어온 요청이 `https://` 로 넘어갑니다.
    인증서 발급에는 도메인 확인 후 몇 분에서 길게는 한 시간 정도 걸릴 수 있습니다.
