@@ -140,10 +140,9 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .sec--grad .faq-tab { border-color: var(--line-dark); color: var(--on-dark-2); }
 .sec--grad .faq-tab[aria-selected="true"] { background: var(--on-dark-1); border-color: var(--on-dark-1); color: var(--ink); }
 /* 흰 카드 위 글자는 그대로 어둡게 */
-.sec--grad .perk, .sec--grad .reason { color: var(--on-paper-1); }
+.sec--grad .perk { color: var(--on-paper-1); }
 .sec--grad .perk h3 { color: var(--on-paper-1); }
-.sec--grad .reason h3 { color: var(--on-paper-1); }
-.sec--grad .perk p, .sec--grad .reason p { color: var(--on-paper-2); }
+.sec--grad .perk p { color: var(--on-paper-2); }
 /* 어두운 바탕 위로 올라온 요소 가독성 보정 */
 .sec--grad .spk-topic { color: var(--on-dark-1); }
 .sec--grad .emph h2 { color: var(--on-dark-1); }
@@ -324,16 +323,25 @@ html[lang="en"] .intro-lead { max-width: 32ch; }
 @media (max-width: 780px) { .reasons { grid-template-columns: minmax(0, 1fr); } }
 .reason {
   padding: 30px 28px 34px;
-  background: var(--paper); border: 1px solid var(--line-paper); border-radius: 16px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 16px;
   display: flex; flex-direction: column; gap: 12px;
+  position: relative; overflow: hidden;
 }
-.sec--paper .reason { background: #fff; }
+.reason::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(120% 90% at 0% 0%, rgba(255,23,39,0.18) 0%, rgba(255,23,39,0) 60%);
+}
 .reason h3 {
-  font-size: 1.1875rem; font-weight: 700; line-height: 1.4; color: var(--on-paper-1);
-  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 1.1875rem; font-weight: 700; line-height: 1.4; color: var(--on-dark-1);
+  display: flex; align-items: center; gap: 12px; position: relative;
 }
-.reason h3 svg { width: 22px; height: 22px; flex: none; margin-top: 3px; stroke-width: 1.9; color: var(--brand); }
-.reason p { color: var(--on-paper-2); font-size: 0.9375rem; }
+.reason h3 svg {
+  width: 20px; height: 20px; flex: none; stroke-width: 1.9; color: var(--brand-warm);
+  background: rgba(255,23,39,0.16); border-radius: 999px; padding: 8px; box-sizing: content-box;
+}
+.reason p { color: var(--on-dark-2); font-size: 0.9375rem; position: relative; }
 .why-title { color: var(--on-dark-1); }
 
 /* ==========================================================================
