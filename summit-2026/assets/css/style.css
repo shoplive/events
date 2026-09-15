@@ -735,7 +735,7 @@ html[lang="ja"] .perk-req-tx { word-break: auto-phrase; }
   transition: all .18s ease;
 }
 .faq-tab[aria-selected="true"] { background: var(--on-paper-1); border-color: var(--on-paper-1); color: var(--paper); }
-.faq-group { max-width: 900px; border-top: 1px solid var(--line-paper); }
+.faq-group { max-width: 1000px; border-top: 1px solid var(--line-paper); }
 .faq-group[hidden] { display: none; }
 .faq-group details { border-bottom: 1px solid var(--line-paper); }
 .faq-group summary {
@@ -746,7 +746,7 @@ html[lang="ja"] .perk-req-tx { word-break: auto-phrase; }
 .faq-group summary .q { font-family: var(--label); color: var(--brand-deep); flex: none; }
 .faq-group summary .plus { margin-left: auto; width: 16px; height: 16px; flex: none; color: var(--on-paper-3); transition: transform .2s ease; }
 .faq-group details[open] summary .plus { transform: rotate(45deg); color: var(--brand-deep); }
-.faq-group .ans { padding: 0 4px 22px 30px; color: var(--on-paper-2); font-size: 0.9375rem; max-width: 72ch; }
+.faq-group .ans { padding: 0 4px 22px 30px; color: var(--on-paper-2); font-size: 0.9375rem; max-width: 100ch; }
 .faq-group .ans a { color: var(--brand-deep); border-bottom: 1px solid rgba(234,21,37,.4); }
 
 /* ==========================================================================
