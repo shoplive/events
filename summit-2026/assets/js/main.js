@@ -276,42 +276,6 @@
   });
 })();
 
-/* ============================================================
-   3. 화면에 실제 CTA 가 있으면 플로팅 CTA 숨김
-   ============================================================ */
-(function () {
-  var cta = document.getElementById('floatCta');
-  if (!cta || !('IntersectionObserver' in window)) return;
-
-  /* 버튼 자체를 본다. 예전에는 버튼을 감싼 섹션(.hero · #attend)이 20% 이상
-     보이는지로 판단했는데, 히어로처럼 긴 섹션은 끝까지 스크롤하면 노출 비율이
-     20% 아래로 떨어지는 동안에도 그 안의 버튼은 화면에 남아 있어서 버튼이 둘 다
-     보였다. 섹션 면적은 "버튼이 화면에 있다" 의 대리 지표가 되지 못한다. */
-  var targets = [];
-  ['.hero-cta', '.invite-cta', '#footer'].forEach(function (sel) {
-    var el = document.querySelector(sel);
-    if (el) targets.push(el);
-  });
-  if (!targets.length) return;
-
-  /* 헤더는 sticky 라 뷰포트 상단을 덮는다. 그 아래 깔린 버튼은 화면 안에 있어도
-     누를 수 없으므로, 관찰 영역에서 헤더 높이만큼을 잘라낸다. 이게 없으면 인라인
-     CTA 가 헤더에 가려지는 구간에서 플로팅까지 숨어, 어디에서도 CTA 를 누를 수
-     없는 상태가 된다. */
-  var head = document.querySelector('.gnb');
-  var inset = head ? Math.round(head.getBoundingClientRect().height) : 0;
-
-  var active = [];
-  var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) {
-      var i = active.indexOf(e.target);
-      if (e.isIntersecting) { if (i < 0) active.push(e.target); }
-      else if (i >= 0) { active.splice(i, 1); }
-    });
-    cta.classList.toggle('is-hidden', active.length > 0);
-  }, { threshold: 0, rootMargin: -inset + 'px 0px 0px 0px' });
-  targets.forEach(function (el) { io.observe(el); });
-})();
 
 /* 언어 선택 드롭다운 */
 (function () {
@@ -435,8 +399,8 @@ en: {
 "참석해주신 모든 분께 이번 서밋을 기억할 수 있는 기념품을 준비했습니다.": "A keepsake from the Summit for every guest.",
 "끝까지 세션을 들으신 분들을 위해 특별한 선물을 준비했어요.": "A special prize draw for everyone who stays to the end.",
 "지금 가장 앞서가는 브랜드들의 이야기를 한자리에서 듣고,<br />그 기회를 우리의 비즈니스로 만들고 돌아가는 자리입니다.": "Hear from the brands setting the pace right now,<br />and leave with that opportunity turned into your own.",
-"Video Commerce Summit 2026은 이커머스·유통·브랜드 기업의 리더분들을 별도 초청으로 모시는 행사입니다. 초청장을 받으신 분에 한해 아래에서 참석 등록을 하실 수 있습니다.": "Video Commerce Summit 2026 is hosted by invitation for leaders in e-commerce, retail and brand businesses. If you have received an invitation, you can register below.",
-"참석이 어려우시거나 동반 참석을 원하시는 경우, 등록 시 함께 알려주시면 자리를 조정해 드립니다.": "If you can no longer attend, or would like to bring a guest, let us know when you register and we will adjust your seat.",
+"Video Commerce Summit 2026은 이커머스·유통·브랜드 기업의 리더분들을 별도 초청으로 모시는 행사입니다. 참석 여부는 초청장에 안내된 담당자에게 회신해 주시면 됩니다.": "Video Commerce Summit 2026 is hosted by invitation for leaders in e-commerce, retail and brand businesses. If you have received an invitation, simply reply to the contact named in it.",
+"참석이 어려우시거나 동반 참석을 원하시는 경우, 회신 시 함께 알려주시면 자리를 조정해 드립니다.": "If you can no longer attend, or would like to bring a guest, let us know when you reply and we will adjust your seat.",
 "서울 송파구 올림픽로 300 롯데월드타워 31층<span class=\"sub\">SKY31 CONFERENCE A룸</span>": "300 Olympic-ro, Songpa-gu, Seoul, Lotte World Tower, 31F<span class=\"sub\">SKY31 Conference A Room</span>",
 "10:30 – 11:00<span class=\"sub\">등록 후 바로 프로그램이 시작됩니다</span>": "10:30 – 11:00<span class=\"sub\">The program begins as soon as check-in closes</span>",
 "1. 대중교통 이용": "1. By public transport",
@@ -464,7 +428,6 @@ en: {
 "주최·주관 : SHOPLIVE": "Hosted by SHOPLIVE",
 "초대 고객 대상": "By invitation only",
 "확장과 기회": "growth and opportunity",
-"초청 대상자 등록하기": "Register for the Summit",
 "패션": "Fashion",
 "연사 협의 중": "Speaker to be announced",
 "리빙": "Living",
@@ -594,8 +557,8 @@ ja: {
 "참석해주신 모든 분께 이번 서밋을 기억할 수 있는 기념품을 준비했습니다.": "ご参加いただいた皆さまに、このSummitを覚えていただける記念品をご用意しました。",
 "끝까지 세션을 들으신 분들을 위해 특별한 선물을 준비했어요.": "最後までご参加いただいた方に、特別なプレゼントをご用意しています。",
 "지금 가장 앞서가는 브랜드들의 이야기를 한자리에서 듣고,<br />그 기회를 우리의 비즈니스로 만들고 돌아가는 자리입니다.": "いま最も先を行くブランドの話を一度に聞き、<br />その機会を自社のビジネスにつなげて持ち帰る場です。",
-"Video Commerce Summit 2026은 이커머스·유통·브랜드 기업의 리더분들을 별도 초청으로 모시는 행사입니다. 초청장을 받으신 분에 한해 아래에서 참석 등록을 하실 수 있습니다.": "Video Commerce Summit 2026は、EC・流通・ブランド企業のリーダーの皆さまを個別にご招待する催しです。招待状をお受け取りの方に限り、以下からご登録いただけます。",
-"참석이 어려우시거나 동반 참석을 원하시는 경우, 등록 시 함께 알려주시면 자리를 조정해 드립니다.": "ご都合が合わなくなった場合や、同伴者をご希望の場合は、ご登録時にお知らせいただければ席を調整いたします。",
+"Video Commerce Summit 2026은 이커머스·유통·브랜드 기업의 리더분들을 별도 초청으로 모시는 행사입니다. 참석 여부는 초청장에 안내된 담당자에게 회신해 주시면 됩니다.": "Video Commerce Summit 2026は、EC・流通・ブランド企業のリーダーの皆さまを個別にご招待する催しです。ご出欠は、招待状に記載の担当者へご返信ください。",
+"참석이 어려우시거나 동반 참석을 원하시는 경우, 회신 시 함께 알려주시면 자리를 조정해 드립니다.": "ご都合が合わなくなった場合や、同伴者をご希望の場合は、ご返信の際にお知らせいただければ席を調整いたします。",
 "서울 송파구 올림픽로 300 롯데월드타워 31층<span class=\"sub\">SKY31 CONFERENCE A룸</span>": "ソウル特別市 松坡区 オリンピック路300 ロッテワールドタワー 31階<span class=\"sub\">SKY31 CONFERENCE Aルーム</span>",
 "10:30 – 11:00<span class=\"sub\">등록 후 바로 프로그램이 시작됩니다</span>": "10:30 – 11:00<span class=\"sub\">受付終了後、そのままプログラムが始まります</span>",
 "1. 대중교통 이용": "1. 公共交通機関をご利用の場合",
@@ -624,7 +587,6 @@ ja: {
 "주최·주관 : SHOPLIVE": "主催 : SHOPLIVE",
 "초대 고객 대상": "招待制",
 "확장과 기회": "拡張と成長の機会",
-"초청 대상자 등록하기": "参加登録へ進む",
 "패션": "ファッション",
 "연사 협의 중": "スピーカー調整中",
 "리빙": "リビング",
