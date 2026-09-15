@@ -152,7 +152,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 /* ---- 공통 헤드 ---------------------------------------------------------- */
 .kicker {
   display: inline-flex; align-items: center;
-  font-family: var(--label); font-size: 0.75rem; font-weight: 700;
+  font-family: var(--label); font-size: 0.8125rem; font-weight: 700;
   letter-spacing: 0.2em; text-transform: uppercase; color: var(--brand);
 }
 
@@ -330,9 +330,8 @@ html[lang="en"] .intro-lead { max-width: 32ch; }
 }
 .reason h3 {
   font-size: 1.1875rem; font-weight: 700; line-height: 1.4; color: var(--on-dark-1);
-  display: flex; align-items: flex-start; gap: 10px; position: relative;
+  display: flex; align-items: flex-end; gap: 10px; position: relative;
 }
-.reason h3 .tx { padding-top: 0.2em; }
 .reason h3 .num {
   flex: none; font-size: 1.5rem; font-weight: 800; line-height: 1;
   letter-spacing: -0.02em; color: var(--brand);
@@ -570,9 +569,8 @@ html[lang="en"] .intro-lead { max-width: 32ch; }
 .perk > * { position: relative; }
 .perk h3 {
   font-size: 1.0625rem; font-weight: 700; color: var(--on-dark-1);
-  display: flex; align-items: flex-start; gap: 10px;
+  display: flex; align-items: flex-end; gap: 10px;
 }
-.perk h3 .tx { padding-top: 0.25em; }
 .perk h3 .num {
   flex: none; font-size: 1.5rem; font-weight: 800; line-height: 1;
   letter-spacing: -0.02em; color: var(--brand);
