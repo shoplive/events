@@ -155,11 +155,10 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
 /* ---- 공통 헤드 ---------------------------------------------------------- */
 .kicker {
-  display: inline-flex; align-items: center; gap: 10px;
+  display: inline-flex; align-items: center;
   font-family: var(--label); font-size: 0.75rem; font-weight: 700;
   letter-spacing: 0.2em; text-transform: uppercase; color: var(--brand);
 }
-.kicker::before { content: ""; width: 20px; height: 1px; background: currentColor; flex: none; }
 
 .sec-head { max-width: 760px; margin-bottom: clamp(36px, 5vw, 58px); }
 .sec-head .kicker { margin-bottom: 18px; }
