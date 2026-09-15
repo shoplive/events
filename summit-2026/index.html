@@ -479,7 +479,7 @@
           <div class="venue-kakao-map">
             <!-- * 카카오맵 - 지도퍼가기 -->
             <!-- 1. 지도 노드 -->
-            <div id="daumRoughmapContainer1789112774478" class="root_daum_roughmap root_daum_roughmap_landing"></div>
+            <div id="daumRoughmapContainer1789456505508" class="root_daum_roughmap root_daum_roughmap_landing"></div>
 
             <!--
                 2. 설치 스크립트
@@ -495,12 +495,12 @@
                        칸 너비를 재서 넘긴다. 로더를 받지 못한 환경에서는 daum 이
                        없으므로 조용히 넘어간다. */
                     if (!window.daum || !daum.roughmap) return;
-                    var node = document.getElementById('daumRoughmapContainer1789112774478');
+                    var node = document.getElementById('daumRoughmapContainer1789456505508');
                     var box = node && node.parentNode;
                     var w = box ? box.clientWidth : 0;
                     new daum.roughmap.Lander({
-                        "timestamp" : "1789112774478",
-                        "key" : "uinky87t5ti",
+                        "timestamp" : "1789456505508",
+                        "key" : "ur99e85su6q",
                         "mapWidth" : String(w > 0 ? w : 640),
                         "mapHeight" : "360"
                     }).render();
