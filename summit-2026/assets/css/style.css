@@ -335,13 +335,11 @@ html[lang="en"] .intro-lead { max-width: 32ch; }
 }
 .reason h3 {
   font-size: 1.1875rem; font-weight: 700; line-height: 1.4; color: var(--on-dark-1);
-  display: flex; align-items: center; gap: 12px; position: relative;
+  display: flex; align-items: flex-start; gap: 14px; position: relative;
 }
 .reason h3 .num {
-  width: 20px; height: 20px; flex: none; box-sizing: content-box; padding: 8px;
-  display: inline-flex; align-items: center; justify-content: center;
-  font-size: 1rem; font-weight: 800; color: var(--brand-warm);
-  background: rgba(255,23,39,0.16); border-radius: 999px;
+  flex: none; font-size: 2.375rem; font-weight: 800; line-height: 0.9;
+  letter-spacing: -0.02em; color: var(--brand); margin-top: -2px;
 }
 .reason p { color: var(--on-dark-2); font-size: 0.9375rem; position: relative; }
 .why-title { color: var(--on-dark-1); }
