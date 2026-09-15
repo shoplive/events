@@ -567,12 +567,14 @@ html[lang="en"] .intro-lead { max-width: 32ch; }
   background: radial-gradient(120% 90% at 0% 0%, rgba(255,23,39,0.18) 0%, rgba(255,23,39,0) 60%);
 }
 .perk > * { position: relative; }
-.perk .ic {
-  width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center;
-  background: rgba(255,23,39,0.16); color: var(--brand-warm); margin-bottom: 4px;
+.perk h3 {
+  font-size: 1.0625rem; font-weight: 700; color: var(--on-dark-1);
+  display: flex; align-items: baseline; gap: 10px;
 }
-.perk .ic svg { width: 21px; height: 21px; }
-.perk h3 { font-size: 1.0625rem; font-weight: 700; color: var(--on-dark-1); }
+.perk h3 .num {
+  flex: none; font-size: 1.5rem; font-weight: 800; line-height: 1;
+  letter-spacing: -0.02em; color: var(--brand);
+}
 .perk p { font-size: 0.9375rem; color: var(--on-dark-2); }
 /* 일본어는 문절 단위로 줄바꿈 — body의 keep-all을 해제한다 */
 html[lang="ja"] body { word-break: normal; line-break: strict; }
