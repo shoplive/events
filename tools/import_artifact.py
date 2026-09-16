@@ -51,7 +51,7 @@ ASSET_NAMES = {
     "d1ce8b64": "img/speaker-kim-kiyoung.jpg",
     "41791790": "img/speaker-lee-gyuwon.jpg",
     "625313ab": "img/speaker-kim-seongjin.jpg",
-    "de227ba5": "img/speaker-kim-moeul.jpg",
+    "95c9726f": "img/speaker-kim-moeul.jpg",
     "ec459dd8": "img/speaker-onishi-kiyotaka.png",
     # timetable thumbnails
     "c9f59c53": "img/timetable-kim-kiyoung.jpg",
