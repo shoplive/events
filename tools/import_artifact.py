@@ -51,10 +51,14 @@ ASSET_NAMES = {
     "d1ce8b64": "img/speaker-kim-kiyoung.jpg",
     "41791790": "img/speaker-lee-gyuwon.jpg",
     "625313ab": "img/speaker-kim-seongjin.jpg",
+    "de227ba5": "img/speaker-kim-moeul.jpg",
+    "ec459dd8": "img/speaker-onishi-kiyotaka.png",
     # timetable thumbnails
     "c9f59c53": "img/timetable-kim-kiyoung.jpg",
     "70e36ca0": "img/timetable-kim-seongjin.jpg",
     "682acf0a": "img/timetable-lee-gyuwon.jpg",
+    "ebcda67b": "img/timetable-kim-moeul.jpg",
+    "53d5db34": "img/timetable-onishi-kiyotaka.png",
     # perks
     "9ef7a946": "img/perk-demo-booth.webp",
     "ab724149": "img/perk-networking-lunch.webp",
