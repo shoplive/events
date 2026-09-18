@@ -47,11 +47,15 @@ ASSET_NAMES = {
     "1d69a801": "img/logo-mareunfive.png",
     "a5a957a8": "img/logo-atcosme.png",
     "6d3f2343": "img/logo-silicon2.png",
+    "01341ea4": "img/logo-keb-hana.png",
+    "fd4cc3f6": "img/logo-meta.png",
+    "e501b7a9": "img/logo-pulio.png",
     # speaker portraits
     "d1ce8b64": "img/speaker-kim-kiyoung.jpg",
     "41791790": "img/speaker-lee-gyuwon.jpg",
     "625313ab": "img/speaker-kim-seongjin.jpg",
     "95c9726f": "img/speaker-kim-moeul.jpg",
+    "754d6b9a": "img/speaker-choi-young.jpg",
     "ec459dd8": "img/speaker-onishi-kiyotaka.png",
     # timetable thumbnails
     "c9f59c53": "img/timetable-kim-kiyoung.jpg",
