@@ -238,7 +238,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 /* 파티클 워드마크 */
 .wordmark {
   position: relative; z-index: 2;
-  width: 100%; margin-top: clamp(96px, 11.6vw, 192px);
+  width: 100%; margin-top: clamp(112px, 13vw, 216px);
   height: clamp(112px, 16.5vw, 280px);
 }
 .wordmark canvas { display: block; width: 100%; height: 100%; }
@@ -256,8 +256,8 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .hero h1 span { color: var(--brand); }
 
 .hero-meta {
-  font-weight: 600; margin-top: clamp(18px, 2.4vw, 32px); display: inline-flex; flex-wrap: wrap; justify-content: center;
-  align-items: center; gap: 0.5em 1.1em;
+  font-weight: 600; margin-top: clamp(26px, 3.2vw, 44px); display: inline-flex; flex-wrap: wrap; justify-content: center;
+  align-items: center; gap: 0.5em 1.45em;
   font-family: var(--label); font-size: 0.9375rem; color: var(--on-dark-1);
   font-variant-numeric: tabular-nums;
 }
@@ -280,10 +280,11 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
    ========================================================================== */
 .intro-lead {
   font-family: var(--display); font-weight: 700;
-  font-size: clamp(1.75rem, 4.2vw, 3rem); line-height: 1.25; max-width: 20ch;
+  /* 줄바꿈은 본문의 <br> 로 직접 잡는다 — ch 기준 폭 제한은 한글에서 엉뚱한 자리를 접는다 */
+  font-size: clamp(1.75rem, 4.2vw, 3rem); line-height: 1.25; max-width: none;
 }
 .intro-lead em { font-style: normal; color: var(--brand-deep); }
-/* 영문은 같은 20ch 안에 한 줄이 안 들어간다 — 첫 줄을 붙여 쓴다 */
+/* 영문은 문장이 길어 <br> 만으로 부족하다 — 폭을 묶어 줄을 고르게 나눈다 */
 html[lang="en"] .intro-lead { max-width: 32ch; }
 .intro-q {
   margin-top: 26px; font-size: clamp(1.0625rem, 1.8vw, 1.3125rem);
@@ -485,8 +486,14 @@ html[lang="en"] .intro-lead { max-width: 32ch; }
   background: radial-gradient(ellipse 64% 60% at 50% 42%, rgba(255,255,255,0.09), transparent 70%);
 }
 .tt-ph-icon {
-  position: absolute; left: 50%; top: 44%; transform: translate(-50%, -50%);
-  width: 38px; height: 38px; z-index: 1; color: rgba(255,255,255,0.18);
+  position: absolute; left: 50%; top: 36%; transform: translate(-50%, -50%);
+  width: 32px; height: 32px; z-index: 1; color: rgba(255,255,255,0.18);
+}
+.tt-ph-label {
+  position: absolute; left: 50%; top: 72%; transform: translate(-50%, -50%);
+  z-index: 2; white-space: nowrap;
+  font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.02em;
+  color: rgba(255,255,255,0.46);
 }
 .tt-ph-icon svg { width: 100%; height: 100%; }
 .tt-logo {
@@ -582,6 +589,9 @@ html[lang="ja"] body { word-break: normal; line-break: strict; }
 html[lang="ja"] h1, html[lang="ja"] h2, html[lang="ja"] h3, html[lang="ja"] h4,
 html[lang="ja"] .ttl, html[lang="ja"] .spk-topic, html[lang="ja"] .hero-meta,
 html[lang="ja"] .perk-req-tx { word-break: auto-phrase; }
+/* 본문 문단은 행을 꽉 채우되, 마지막 줄에 글자 한두 개만 남는 건 막는다 */
+html[lang="ja"] .speaker-lead-text, html[lang="ja"] .intro-body, html[lang="ja"] .intro-q,
+html[lang="ja"] .detail, html[lang="ja"] .perk p, html[lang="ja"] .spk-person { text-wrap: pretty; }
 /* 럭키드로우 참여 조건 — 링크드인 팔로우 */
 .perk-req {
   display: flex; align-items: flex-start; gap: 9px;
