@@ -62,7 +62,7 @@ ASSET_NAMES = {
     "7daea379": "img/speaker-choi-young.jpg",
     "694c383d": "img/speaker-kim-siyoung.jpg",
     "21edb412": "img/speaker-lee-juhee.jpg",
-    "d2539580": "img/speaker-oh-juyoung.jpg",
+    "3a1fc87d": "img/speaker-oh-juyoung.jpg",
     "6be1c3ef": "img/speaker-lee-gyuwon.jpg",
     "ec459dd8": "img/speaker-onishi-kiyotaka.png",
     # timetable thumbnails
@@ -74,7 +74,7 @@ ASSET_NAMES = {
     "7bec7693": "img/timetable-choi-young.jpg",
     "f73567d4": "img/timetable-lee-gyuwon.jpg",
     "cad82cea": "img/timetable-lee-juhee.jpg",
-    "cde806bd": "img/timetable-oh-juyoung.jpg",
+    "a08a9787": "img/timetable-oh-juyoung.jpg",
     "bf226bc9": "img/timetable-kim-siyoung.jpg",
     # perks
     "9ef7a946": "img/perk-demo-booth.webp",
