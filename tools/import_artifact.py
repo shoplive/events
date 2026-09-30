@@ -143,8 +143,8 @@ HEAD_TEMPLATE = """<!doctype html>
 # The hero live player is not part of the artifact. Its files live beside the
 # generated ones (assets/js/live-player.js, assets/css/live-player.css) and are
 # never written here; only the tags that load them are, so a re-import keeps
-# the player. The Shoplive loader must load synchronously before live-player.js,
-# which calls cloud.shoplive right away.
+# the player. The Shoplive loader must run before live-player.js, which calls
+# cloud.shoplive right away, so neither may be async.
 PAGE_TAIL = """
 <script src="assets/js/main.js"></script>
 <script src="https://static.shoplive.cloud/shoplive.js"></script>

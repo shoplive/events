@@ -81,14 +81,17 @@ python3 tools/check_links.py
   방송을 바꾸려면 이 파일의 `ACCESS_KEY` · `CAMPAIGN_KEY` 를 고치세요.
 - `assets/css/live-player.css` — 그 줄의 폭과 여백, 그리고 데스크톱에서 영상만 16:9 로
   꽉 채우고 방송 일시·제목·상품·편성표를 숨기는 덮어쓰기. 뷰포트 480px 이하에서는 플러그인이
-  모바일 커버를 그리며, 이 덮어쓰기는 거기에 걸리지 않습니다. 데스크톱 전체화면
+  모바일 커버를 그리며, 이 덮어쓰기는 거기에 걸리지 않습니다. 이 판정은 플러그인이 페이지를 열 때
+  한 번만 하므로, 창 크기나 화면 방향을 바꿔도 다시 고르지 않습니다. 데스크톱 전체화면
   (`.sl-desktop-fullscreen`)에도 걸리지 않아 플러그인의 전체화면 규칙이 그대로 적용됩니다.
   플레이어 iframe 의 `color-scheme` 도 여기서 `normal` 로 맞춥니다. 페이지의 `dark` 와 어긋나면
   브라우저가 iframe 바탕을 흰색으로 칠해 확장뷰(`.video-expanded`) 레터박스가 하얗게 보입니다.
 - 두 파일과 `https://static.shoplive.cloud/shoplive.js` 로더를 불러오는 태그는
   `tools/import_artifact.py` 의 `HEAD_TEMPLATE` · `PAGE_TAIL` 에 들어 있어서,
-  재임포트해도 페이지에 다시 붙습니다. 로더는 `live-player.js` 보다 먼저, `async`·`defer`
-  없이 불러와야 합니다.
+  재임포트해도 페이지에 다시 붙습니다. 로더는 `live-player.js` 보다 먼저 실행돼야 하므로
+  둘 중 어느 쪽에도 `async` 를 달면 안 됩니다.
+- 이 계정의 원격 설정은 라이브 미니 프리뷰가 자동(`AUTO`)이라, `initPlugin` 에
+  `useAutoPreview: false` 를 넘겨 우하단에 같은 방송이 하나 더 뜨지 않게 합니다.
 
 ## 페이지 수정하기
 
@@ -163,8 +166,12 @@ S3·CloudFront 나 사내 웹서버에 올린다면 저장소 루트를 문서 �
 
 - **Google Fonts** — Noto Sans JP (일본어 표기용)
 - **Kakao 지도** (`ssl.daumcdn.net`) — 오시는 길 약도
-- **Shoplive 플러그인** (`static.shoplive.cloud`, `config.shoplive.cloud`, `capi.shoplive.cloud`
-  등) — 히어로 라이브 플레이어
+- **Shoplive 플러그인** — 히어로 라이브 플레이어
+  - 페이지에서: `static.shoplive.cloud`(로더·청크·플레이어), `config.shoplive.cloud`(계정 설정),
+    `capi.shoplive.cloud`(캠페인 조회), `cdnjs.cloudflare.com`(hls.js),
+    `cdn.jsdelivr.net`(Pretendard CSS)
+  - 플레이어 iframe 에서: `conf.shoplive.cloud`(방송 설정), `image.shoplive.cloud`(포스터 등)
+  - `localStorage` 에 `sl_ceid` 를 남깁니다.
 
 ## 알려진 사항
 

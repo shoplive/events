@@ -21,7 +21,9 @@
   row.className = 'hero-live';
   lines.appendChild(row);
 
-  shoplive.initPlugin({ accessKey: ACCESS_KEY });
+  // 이 계정의 원격 설정은 liveMiniPreview.mode 가 AUTO 라, 끄지 않으면 방송이 ON AIR 일 때
+  // 우하단에 같은 방송의 미니 프리뷰가 히어로 플레이어와 함께 하나 더 뜬다.
+  shoplive.initPlugin({ accessKey: ACCESS_KEY, useAutoPreview: false });
   shoplive.setOverall(CONTAINER_ID, {
     featuredOnly: true,
     featured: { fixedCampaignKey: CAMPAIGN_KEY },
