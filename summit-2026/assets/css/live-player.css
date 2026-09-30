@@ -17,7 +17,9 @@
    둘이 다르면 브라우저가 iframe 바탕을 불투명한 흰색으로 칠해서, 확장뷰(.video-expanded)에서
    투명하게 비워 둔 위아래 레터박스가 흰색으로 보인다. iframe 쪽을 맞춰 주면 바탕이 투명해져
    뒤의 검은 바탕(전체화면에서는 플러그인의 #000)이 비친다. iframe 요소의 background 로는
-   덮을 수 없다 — 흰 바탕은 iframe 문서가 그 위에 칠한다. */
+   덮을 수 없다 — 흰 바탕은 iframe 문서가 그 위에 칠한다.
+   #hero-live-player 로 좁히지 않는다: 모바일 커버의 '입장하기'로 body 에 뜨는 전체화면
+   플레이어도 같은 페이지의 iframe 이라 같은 문제가 생긴다. */
 .cloud-shoplive .player-iframe { color-scheme: normal; }
 
 /* 데스크톱(FeaturedCampaignPlayer)에서는 영상만 16:9 로 줄을 꽉 채운다.
@@ -48,7 +50,9 @@
   border-radius: 16px;
 }
 
-/* 영상 외 UI — 방송 일시·제목, 상품 목록, 편성표 */
+/* 영상 외 UI — 방송 일시·제목, 상품 목록, 편성표.
+   위 크기 규칙과 달리 전체화면을 빼지 않는다: 플러그인의 전체화면 규칙(CUS-1054)도 이 셋을
+   숨기고 상품은 플레이어 안 버튼으로 연다. 여기서 빼도 전체화면 모습은 같다. */
 #hero-live-player .FeaturedCampaignPlayer .wrap-live-desc,
 #hero-live-player .FeaturedCampaignPlayer .wrap-displaying-list,
 #hero-live-player .FeaturedCampaignPlayer .wrap-calendar { display: none; }
