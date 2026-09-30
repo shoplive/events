@@ -26,7 +26,9 @@
 │   └── assets/
 │       ├── css/fonts.css     Pretendard @font-face
 │       ├── css/style.css     페이지 스타일
+│       ├── css/live-player.css  히어로 라이브 플레이어 줄 — 저장소 소유, 임포터가 건드리지 않음
 │       ├── js/main.js        히어로 파티클·탭·FAQ 등 페이지 동작
+│       ├── js/live-player.js    히어로 라이브 플레이어 — 저장소 소유, 임포터가 건드리지 않음
 │       ├── fonts/*.woff2
 │       └── img/*
 ├── tools/
@@ -68,6 +70,28 @@ python3 tools/check_links.py
 
 `tools/check_links.py` 가 이 파일의 존재를 검사하므로, 지우거나 이름을 바꾸면 배포가
 막힙니다.
+
+### 히어로 라이브 플레이어
+
+히어로의 `.hero-lines` 맨 아래 줄에 서밋 방송을 Shoplive 오버롤 상단 영역으로 띄웁니다
+(`cloud.shoplive.setOverall` 에 `featuredOnly` · `featured.fixedCampaignKey`).
+아티팩트에는 없는 부분이라 `og-image.png` 와 같은 이유로 임포터가 쓰는 파일과 분리해 두었습니다.
+
+- `assets/js/live-player.js` — 줄을 만들어 `.hero-lines` 끝에 붙이고 플러그인을 띄웁니다.
+  방송을 바꾸려면 이 파일의 `ACCESS_KEY` · `CAMPAIGN_KEY` 를 고치세요.
+- `assets/css/live-player.css` — 그 줄의 폭과 여백, 그리고 데스크톱에서 영상만 16:9 로
+  꽉 채우고 방송 일시·제목·상품·편성표를 숨기는 덮어쓰기. 뷰포트 480px 이하에서는 플러그인이
+  모바일 커버를 그리며, 이 덮어쓰기는 거기에 걸리지 않습니다. 이 판정은 플러그인이 페이지를 열 때
+  한 번만 하므로, 창 크기나 화면 방향을 바꿔도 다시 고르지 않습니다. 데스크톱 전체화면
+  (`.sl-desktop-fullscreen`)에도 걸리지 않아 플러그인의 전체화면 규칙이 그대로 적용됩니다.
+  플레이어 iframe 의 `color-scheme` 도 여기서 `normal` 로 맞춥니다. 페이지의 `dark` 와 어긋나면
+  브라우저가 iframe 바탕을 흰색으로 칠해 확장뷰(`.video-expanded`) 레터박스가 하얗게 보입니다.
+- 두 파일과 `https://static.shoplive.cloud/shoplive.js` 로더를 불러오는 태그는
+  `tools/import_artifact.py` 의 `HEAD_TEMPLATE` · `PAGE_TAIL` 에 들어 있어서,
+  재임포트해도 페이지에 다시 붙습니다. 로더는 `live-player.js` 보다 먼저 실행돼야 하므로
+  둘 중 어느 쪽에도 `async` 를 달면 안 됩니다.
+- 이 계정의 원격 설정은 라이브 미니 프리뷰가 자동(`AUTO`)이라, `initPlugin` 에
+  `useAutoPreview: false` 를 넘겨 우하단에 같은 방송이 하나 더 뜨지 않게 합니다.
 
 ## 페이지 수정하기
 
@@ -138,10 +162,16 @@ S3·CloudFront 나 사내 웹서버에 올린다면 저장소 루트를 문서 �
 
 ## 외부 의존성
 
-페이지가 네트워크에서 받아오는 것은 두 가지뿐이고, 나머지 자산은 모두 저장소 안에 있습니다.
+페이지가 네트워크에서 받아오는 것은 세 가지뿐이고, 나머지 자산은 모두 저장소 안에 있습니다.
 
 - **Google Fonts** — Noto Sans JP (일본어 표기용)
 - **Kakao 지도** (`ssl.daumcdn.net`) — 오시는 길 약도
+- **Shoplive 플러그인** — 히어로 라이브 플레이어
+  - 페이지에서: `static.shoplive.cloud`(로더·청크·플레이어), `config.shoplive.cloud`(계정 설정),
+    `capi.shoplive.cloud`(캠페인 조회), `cdnjs.cloudflare.com`(hls.js),
+    `cdn.jsdelivr.net`(Pretendard CSS)
+  - 플레이어 iframe 에서: `conf.shoplive.cloud`(방송 설정), `image.shoplive.cloud`(포스터 등)
+  - `localStorage` 에 `sl_ceid` 를 남깁니다.
 
 ## 알려진 사항
 

@@ -1,0 +1,58 @@
+/* ==========================================================================
+   히어로 라이브 — assets/js/live-player.js 가 .hero-lines 끝에 붙이는 줄
+   style.css 는 재임포트 때마다 새로 쓰이므로 따로 둔다.
+   ========================================================================== */
+
+/* .hero-lines 는 justify-items: center 그리드라 폭을 잡아 주지 않으면 줄이
+   내용 폭으로 줄어든다. 오버롤은 컨테이너 폭을 재서 레이아웃을 고르므로
+   줄이 40px 로 줄어 가장 작은 레이아웃(cslw-ms)으로 떨어진다. */
+.hero-live {
+  width: 100%; max-width: 960px;
+  margin: clamp(20px, 3vw, 32px) auto 0;
+  /* .hero-lines · .hero-inner 의 글자 크기와 가운데 정렬이 플레이어 UI 로 새지 않게 */
+  font-size: 1rem; text-align: left;
+}
+
+/* 플레이어 iframe 문서는 color-scheme 을 선언하지 않는데(light) 이 페이지는 :root 가 dark 다.
+   둘이 다르면 브라우저가 iframe 바탕을 불투명한 흰색으로 칠해서, 확장뷰(.video-expanded)에서
+   투명하게 비워 둔 위아래 레터박스가 흰색으로 보인다. iframe 쪽을 맞춰 주면 바탕이 투명해져
+   뒤의 검은 바탕(전체화면에서는 플러그인의 #000)이 비친다. iframe 요소의 background 로는
+   덮을 수 없다 — 흰 바탕은 iframe 문서가 그 위에 칠한다.
+   #hero-live-player 로 좁히지 않는다: 모바일 커버의 '입장하기'로 body 에 뜨는 전체화면
+   플레이어도 같은 페이지의 iframe 이라 같은 문제가 생긴다. */
+.cloud-shoplive .player-iframe { color-scheme: normal; }
+
+/* 데스크톱(FeaturedCampaignPlayer)에서는 영상만 16:9 로 줄을 꽉 채운다.
+   모바일(뷰포트 480px 이하)은 오버롤이 MobileCampaignCover 를 그리므로 여기에 걸리지 않는다.
+   이 판정은 플러그인이 마운트할 때 한 번만 한다 — 창 크기나 화면 방향을 바꿔도 다시 고르지 않는다.
+   플러그인 CSS 가 뒤에 로드되고 클래스를 여러 겹 쓰므로 id 로 우선순위를 확보한다.
+
+   데스크톱 전체화면(.sl-desktop-fullscreen)일 때는 이 덮어쓰기를 걸지 않는다. id 우선순위가
+   플러그인의 전체화면 규칙(CUS-1054, 영상 박스 100% × 100%, 세로형은 가운데 9:16)까지 이겨서
+   전체화면에서도 16:9 박스·모서리가 남기 때문이다. */
+#hero-live-player .container-top-campaign { max-width: none; margin: 0; padding: 0; }
+
+#hero-live-player .FeaturedCampaignPlayer:not(.sl-desktop-fullscreen),
+#hero-live-player .FeaturedCampaignPlayer:not(.sl-desktop-fullscreen) .wrap-play-goods-list,
+#hero-live-player .FeaturedCampaignPlayer:not(.sl-desktop-fullscreen) .wrap-center-campaign-detail,
+#hero-live-player .FeaturedCampaignPlayer:not(.sl-desktop-fullscreen) .aspect-center-player {
+  width: 100%; max-width: none; height: auto; max-height: none;
+  margin: 0; padding: 0;
+  background: none; border-radius: 0;
+}
+
+#hero-live-player .FeaturedCampaignPlayer:not(.sl-desktop-fullscreen) .aspect-center-player .inner-aspect-ratio {
+  width: 100%; height: 0; padding: 56.25% 0 0; /* 16:9 */
+  border-radius: 16px;
+}
+#hero-live-player .FeaturedCampaignPlayer:not(.sl-desktop-fullscreen) .wrap-center-player {
+  inset: 0; width: 100%; height: 100%;
+  border-radius: 16px;
+}
+
+/* 영상 외 UI — 방송 일시·제목, 상품 목록, 편성표.
+   위 크기 규칙과 달리 전체화면을 빼지 않는다: 플러그인의 전체화면 규칙(CUS-1054)도 이 셋을
+   숨기고 상품은 플레이어 안 버튼으로 연다. 여기서 빼도 전체화면 모습은 같다. */
+#hero-live-player .FeaturedCampaignPlayer .wrap-live-desc,
+#hero-live-player .FeaturedCampaignPlayer .wrap-displaying-list,
+#hero-live-player .FeaturedCampaignPlayer .wrap-calendar { display: none; }

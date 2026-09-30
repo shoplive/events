@@ -135,8 +135,22 @@ HEAD_TEMPLATE = """<!doctype html>
 <link rel="preload" href="assets/fonts/pretendard-700.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="assets/css/fonts.css" />
 <link rel="stylesheet" href="assets/css/style.css" />
+<link rel="stylesheet" href="assets/css/live-player.css" />
 </head>
 <body>
+"""
+
+# The hero live player is not part of the artifact. Its files live beside the
+# generated ones (assets/js/live-player.js, assets/css/live-player.css) and are
+# never written here; only the tags that load them are, so a re-import keeps
+# the player. The Shoplive loader must run before live-player.js, which calls
+# cloud.shoplive right away, so neither may be async.
+PAGE_TAIL = """
+<script src="assets/js/main.js"></script>
+<script src="https://static.shoplive.cloud/shoplive.js"></script>
+<script src="assets/js/live-player.js"></script>
+</body>
+</html>
 """
 
 # The artifact host wraps the page in its own skeleton; these are the only rules
@@ -229,7 +243,8 @@ def main() -> int:
     page = (
         HEAD_TEMPLATE.format(title=title, description=DESCRIPTION, site_url=SITE_URL)
         + markup.strip()
-        + '\n\n<script src="assets/js/main.js"></script>\n</body>\n</html>\n'
+        + "\n"
+        + PAGE_TAIL
     )
     (out / "index.html").write_text(page, encoding="utf-8")
     print(f"  wrote {out / 'index.html'} ({len(page) // 1024} KB)")
