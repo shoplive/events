@@ -71,10 +71,17 @@
   position: relative; isolation: isolate;
   margin-top: clamp(40px, 4.4vw, 56px);   /* 배지 절반이 프레임 위로 올라온다 */
   border-radius: 16px;   /* 데스크톱 영상 박스 모서리 */
+  /* 아래 글로우는 .hero 의 overflow: hidden 에 하단 여백(clamp(56px, 8vw, 96px)) 끝에서 잘린다.
+     흐림을 여백의 0.91 배로 묶어 그 경계에 닿기 전에 0 으로 사그라들게 한다 — 더 넓으면
+     히어로와 #intro 사이에 붉은 가로선이 남는다(모바일에서 특히 보인다). */
   box-shadow:
     0 -28px 90px -48px rgba(234, 21, 37, 0.65),
-    0 40px 120px -40px rgba(234, 21, 37, 0.5);
+    0 40px clamp(51px, 7.3vw, 87px) -40px rgba(234, 21, 37, 0.5);
 }
+
+/* .hero-live 는 position: relative 라 문구 줄보다 나중에 칠해져, 위 글로우가 바로 위 문구
+   글자에 붉은 기를 얹는다. 문구 줄을 한 층 위로 올린다 — 플레이어와 겹치지 않아 클릭은 그대로다. */
+.hero-lines:has(.hero-live .container-top-campaign) > p { position: relative; z-index: 1; }
 
 /* 모바일 커버는 플러그인이 모서리를 12px 로 그린다 — 링·글로우가 카드에 딱 붙도록 맞춘다 */
 .hero-live:has(.MobileCampaignCover) { border-radius: 12px; }
@@ -100,7 +107,10 @@
 
 /* 배지 — .gnb-chip 과 같은 알약, 점은 배경으로 그린다 */
 .hero-live:has(.FeaturedCampaignPlayer, .MobileCampaignCover)::after {
+  /* 장식이라 스크린리더에는 읽히지 않게 대체 텍스트를 비운다. 이 문법을 모르는 브라우저는
+     두 번째 선언을 통째로 버리므로 첫 줄이 남는다. */
   content: "WATCH LIVE";
+  content: "WATCH LIVE" / "";
   position: absolute; top: 0; left: 50%; z-index: 2; transform: translate(-50%, -50%);
   pointer-events: none; white-space: nowrap;
   padding: 7px 14px 7px 28px; border-radius: 999px;
