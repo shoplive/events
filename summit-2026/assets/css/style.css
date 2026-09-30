@@ -435,7 +435,7 @@ html[lang="en"] .intro-lead { max-width: 32ch; }
   box-shadow: 0 4px 12px -6px rgba(8,9,12,0.8);
 }
 .spk-topic {
-  font-size: 1rem; font-weight: 700; line-height: 1.45; color: var(--on-paper-1);
+  font-size: 0.875rem; font-weight: 700; line-height: 1.45; color: var(--on-paper-1);
   letter-spacing: -0.015em;
 }
 .spk-person { margin-top: 8px; font-size: 0.875rem; color: var(--on-paper-3); }
