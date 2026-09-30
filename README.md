@@ -86,6 +86,10 @@ python3 tools/check_links.py
   (`.sl-desktop-fullscreen`)에도 걸리지 않아 플러그인의 전체화면 규칙이 그대로 적용됩니다.
   플레이어 iframe 의 `color-scheme` 도 여기서 `normal` 로 맞춥니다. 페이지의 `dark` 와 어긋나면
   브라우저가 iframe 바탕을 흰색으로 칠해 확장뷰(`.video-expanded`) 레터박스가 하얗게 보입니다.
+  플레이어 둘레의 무대 장식도 여기 있습니다. 포스터가 검정 바탕이라 영상 영역이 페이지에 묻혀서,
+  윗변을 Live Red 로 켠 그라데이션 링(4.8초 주기로 은은하게 밝아졌다 어두워짐), 위·아래 스포트
+  글로우, 윗변 가운데 `WATCH LIVE` 배지로 시청 지점을 알립니다. 데스크톱 플레이어와 모바일 커버에
+  똑같이 걸리고, 플러그인이 그리지 못하면 나타나지 않습니다.
 - 두 파일과 `https://static.shoplive.cloud/shoplive.js` 로더를 불러오는 태그는
   `tools/import_artifact.py` 의 `HEAD_TEMPLATE` · `PAGE_TAIL` 에 들어 있어서,
   재임포트해도 페이지에 다시 붙습니다. 로더는 `live-player.js` 보다 먼저 실행돼야 하므로
